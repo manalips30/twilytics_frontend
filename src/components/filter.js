@@ -16,7 +16,7 @@ class RenderCalender extends React.Component {
 
     onChange = (startDate, endDate) =>{
         this.setState({ startDate, endDate })
-        this.props.onDate(startDate, endDate); 
+        this.props.onChange(startDate, endDate); 
     }
 
     render() {
@@ -31,20 +31,29 @@ class RenderCalender extends React.Component {
 export default class Filter extends React.Component {
     constructor(props) {
         super(props)
+        const date = new Date()
+        const startDate = date.getTime()
         this.state = { 
-        date_check: false
+        date_check: false,
+        startDate, // Today
+        endDate: new Date(startDate).setDate(date.getDate())
         }
     }
     onDateChanged(e){
         this.setState({date_check: !this.state.date_check});
     };
 
+    onChange = (startDate, endDate) =>{
+      this.setState({ startDate, endDate })
+      this.props.onDate(startDate, endDate); 
+    }
+
     render = () => {
         const { startDate, endDate } = this.state
         return (
             <div>
             <input type="checkbox" name="Date" checked={this.state.date_check} onChange={e => this.onDateChanged(e)}/> Date <br/>
-            {this.state.date_check === true ? <RenderCalender /> : ""}
+            {this.state.date_check === true ? <RenderCalender onChange={this.onChange} /> : ""}
             </div>
         )
       }
