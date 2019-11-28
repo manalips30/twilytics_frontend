@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Form from "./Form";
 import Contacts from "./components/contacts";
 import Chart from "./components/Chart";
+import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
+import Route from 'react-router-dom/Route';
 import "./App.css";
 
 
@@ -38,11 +40,41 @@ class App extends Component {
   render() {
     const  {searchKey} = this.state;
     return (
+      <Router>
       <div className="App">
-        <Form onChange={this.onChange} onSearch={this.onSearch} />
-        <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
-        <Chart chartData={this.state.contacts} />
+      <ul>
+        <li>
+        <NavLink to="" exact activeStyle = {
+          {color:'green'}
+        }>Home</NavLink>
+        </li>
+        <li>
+        <NavLink to="/analyse"  exact activeStyle = {
+          {color:'green'}
+        }>Analyse</NavLink>
+        </li>
+      </ul>
+      <Route path="/" exact strict render = {
+        () => {
+          return (
+          <div className = "App">
+          <Form onChange={this.onChange} onSearch={this.onSearch} />
+          <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
+          </div>
+          )
+        }
+       } />
+      <Route path="/analyse" exact strict render = {
+        () => {
+          return (
+            <div className = "App">
+            <Chart chartData={this.state.contacts} />
+            </div>
+          )
+        }
+      } />
       </div>
+      </Router>
     );
   }
 }
