@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "./Form";
 import Contacts from "./components/contacts";
+import Chart from "./components/Chart";
 import "./App.css";
 
 
@@ -14,10 +15,6 @@ class App extends Component {
 
 //http://localhost:8080/list?name=Donald
 
-  componentDidMount() {
-
-  }
-
   onChange = updatedValue => {
     this.setState({
         searchKey: updatedValue
@@ -26,8 +23,8 @@ class App extends Component {
 
   //http://twilytics.us-east-2.elasticbeanstalk.com/list?name=donald  
 
-  onSearch = (search) => {
-    fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/list?name=${search}`)
+  onSearch = async(search) => {
+    await fetch(`http://localhost:8080/list?name=${search}&row=50`)
     .then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
@@ -44,6 +41,7 @@ class App extends Component {
       <div className="App">
         <Form onChange={this.onChange} onSearch={this.onSearch} />
         <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
+        <Chart chartData={this.state.contacts} />
       </div>
     );
   }
