@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "./Form";
 import Contacts from "./components/contacts";
+import Filter from "./components/filter";
 import Chart from "./components/Chart";
 import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
@@ -11,8 +12,7 @@ class App extends Component {
   state = {
     searchKey: "",
     fields: {},
-    contacts :[
-    ]
+    contacts :[],
   };
 
 //http://localhost:8080/list?name=Donald
@@ -25,8 +25,9 @@ class App extends Component {
 
   //http://twilytics.us-east-2.elasticbeanstalk.com/list?name=donald  
 
+
   onSearch = async(search) => {
-    await fetch(`http://localhost:8080/list?name=${search}&row=50`)
+    await fetch(`http://localhost:8080/list?name=${search}`)
     .then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
@@ -36,6 +37,16 @@ class App extends Component {
           searchKey: ""
       })
   };
+
+  onDate = (startDate, endDate) => {
+    console.log("onDate called")
+    fetch('http://localhost:8080/list?name=Donald')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ contacts: data })
+    })
+    .catch(console.log)
+  }
 
   render() {
     const  {searchKey} = this.state;
@@ -60,6 +71,7 @@ class App extends Component {
           <div className = "App">
           <Form onChange={this.onChange} onSearch={this.onSearch} />
           <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
+          <Filter onDate={this.onDate} />
           </div>
           )
         }

@@ -12,9 +12,19 @@
 }
 
 .card-title {
+    display: inline-block;
+    padding: 7%;
+}
+
+.title {
     color: #4CAF50;
 }
 
-.card-text {
+.profilepicture{
+    width: 90%;
+    margin-left: 10%;
+}
 
+.location{
+    margin-left: 10%;
 }
