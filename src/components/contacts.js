@@ -1,7 +1,6 @@
 import React from 'react'
 import "./contacts.css"; 
 
-
 const Contacts = ({ contacts, searchKey }) => {
   console.log(contacts)
   return (
@@ -27,6 +26,7 @@ const Contacts = ({ contacts, searchKey }) => {
             </div>
             <h6 className="location">{contact["user.location"]}</h6>
             <p className="card-text">{contact.full_text}</p>
+            <button className="buttonTweet" onClick={()=> window.open(`https://twitter.com/TulsiGabbard/status/${contact.id}`, "_blank")} >View Tweet</button>
           </div>
         </div>
       ))}
