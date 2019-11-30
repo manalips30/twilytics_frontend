@@ -9,4 +9,6 @@ Steps:
 npm install --save react-chartjs-2 chart.js
 5. Install calender component
 npm install --save @lls/react-light-calendar
+6. Install react router for new page support in web app
+npm install --save react-router-dom
 
