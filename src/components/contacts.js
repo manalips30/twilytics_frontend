@@ -29,8 +29,9 @@ const Contacts = ({ contacts, searchKey }) => {
             <button className="buttonTweet" onClick={()=> window.open(`https://twitter.com/TulsiGabbard/status/${contact.id}`, "_blank")} >View Tweet</button>
           </div>
         </div>
-      ))}
-        </div>
+      ))
+      }
+    </div>
     </div>
   )
 };

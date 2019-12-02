@@ -3,12 +3,12 @@ import Form from "./Form";
 import Contacts from "./components/contacts";
 import Filter from "./components/filter";
 import Chart from "./components/Chart";
-import News from "./components/news";
 import Facets from "./components/facets";
-import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
+import News from "./components/News";
+import {BrowserRouter as Router, Link, NavLink, Redirect} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import "./App.css";
-
+import "./logo.svg";
 
 class App extends Component {
   state = {
@@ -21,7 +21,8 @@ class App extends Component {
     "mentions":[],
     "userLocation":[],
     "additionalProperties":{}}
-    };
+  };
+
 
 //http://localhost:8080/list?name=Donald
 
@@ -48,8 +49,11 @@ class App extends Component {
     .then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
+      this.setState({analyse:true})
+      console.log(this.state.contacts)
     })
     .catch(console.log)
+
       this.setState({
           searchKey: ""
       })
@@ -100,7 +104,7 @@ class App extends Component {
       <div className="App">
       <ul>
         <li>
-        <NavLink to="" exact activeStyle = {
+        <NavLink to="/" exact activeStyle = {
           {color:'green'}
         }>Home</NavLink>
         </li>
@@ -113,13 +117,13 @@ class App extends Component {
       <Route path="/" exact strict render = {
         () => {
           return (
-          <div className = "App"> 
+          <div className = "App_1"> 
           <Form onChange={this.onChange} onSearch={this.onSearch} />
             <div className = "App-components" > 
               <Filter onDate={this.onDate} />
               <Facets facets={this.state.facets} onFacet={this.onFacet} onFilter={this.onFilter}/> 
               <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
-              <News contacts={this.state.contacts}/>
+              <News chartData={this.state.contacts}/>
             </div>
           </div>
           )
@@ -127,8 +131,8 @@ class App extends Component {
        } />
       <Route path="/analyse" exact strict render = {
         () => {
-          return (
-            <div className = "App">
+         return (
+          <div className = "App_1">
             <Chart chartData={this.state.contacts} />
             </div>
           )
