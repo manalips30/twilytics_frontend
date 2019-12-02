@@ -21,6 +21,11 @@
   color: white;
 }
 
+.App-components{
+    display: flex;
+    flex-direction: row;
+}
+
 .App-link {
   color: #09d3ac;
 }
@@ -30,6 +35,7 @@
   margin-left: 35%;
   margin-top: 2%;
 }
+
  .container {
   display: flex;
 }

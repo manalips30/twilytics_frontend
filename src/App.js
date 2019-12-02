@@ -3,9 +3,8 @@ import Form from "./Form";
 import Contacts from "./components/contacts";
 import Filter from "./components/filter";
 import Chart from "./components/Chart";
-import Location_filter from "./components/location_filter"
-import Language_filter from "./components/language_filter"
-import Verified_filter from "./components/verified_filter"
+import News from "./components/news";
+import Facets from "./components/facets";
 import {BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import "./App.css";
@@ -16,7 +15,13 @@ class App extends Component {
     searchKey: "",
     fields: {},
     contacts :[],
-  };
+    facets:{"poiName":[],
+    "lang":[],
+    "hashtags":[],
+    "mentions":[],
+    "userLocation":[],
+    "additionalProperties":{}}
+    };
 
 //http://localhost:8080/list?name=Donald
 
@@ -26,8 +31,17 @@ class App extends Component {
     });
   };
 
-  //http://twilytics.us-east-2.elasticbeanstalk.com/list?name=donald  
+  //http://twilytics.us-east-2.elasticbeanstalk.com/list?name=donald 
 
+   componentDidMount = async() => {
+     await fetch('http://localhost:8080/fetch/fields?name=')
+    .then(res => res.json())
+     .then((data) => {
+       this.setState({ facets: data })
+     })
+     .catch(console.log)
+     console.log(this.state.facets)
+   }
 
   onSearch = async(search) => {
     await fetch(`http://localhost:8080/query/search?name=${search}`)
@@ -39,7 +53,35 @@ class App extends Component {
       this.setState({
           searchKey: ""
       })
+    this.onFacet(search)  
   };
+
+  onFacet = async(query) => {
+    await fetch(`http://localhost:8080/fetch/fields?name=${query}`)
+    .then(res => res.json())
+    .then((data) => {
+     this.setState({ facets: data })
+    })
+    .catch(console.log)
+    console.log("onFacetcalled" + query)
+  };
+
+  onFilter = async(query) => {
+    console.log(query)
+    await fetch('http://localhost:8080/query/facet?name=', {
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: query
+    }).then(res => res.json())
+    .then((data) => {
+      this.setState({ contacts: data })
+    })
+    .catch(console.log)
+    console.log("onFiltercalled")
+  }
 
   onDate = (startDate, endDate) => {
     console.log("onDate called")
@@ -56,13 +98,6 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <Form onChange={this.onChange} onSearch={this.onSearch} />
-        <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
-        <Filter onDate={this.onDate} />
-        <Location_filter />
-        <Language_filter />
-        <Verified_filter />
-        <Chart chartData={this.state.contacts} />
       <ul>
         <li>
         <NavLink to="" exact activeStyle = {
@@ -78,10 +113,14 @@ class App extends Component {
       <Route path="/" exact strict render = {
         () => {
           return (
-          <div className = "App">
+          <div className = "App"> 
           <Form onChange={this.onChange} onSearch={this.onSearch} />
-          <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
-          <Filter onDate={this.onDate} />
+            <div className = "App-components" > 
+              <Filter onDate={this.onDate} />
+              <Facets facets={this.state.facets} onFacet={this.onFacet} onFilter={this.onFilter}/> 
+              <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
+              <News contacts={this.state.contacts}/>
+            </div>
           </div>
           )
         }
