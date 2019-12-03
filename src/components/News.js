@@ -23,7 +23,6 @@ class News extends React.Component {
         super(props);
         this.state = {
         chartData :{},
-        UrlLink : "No news to Display"
         }
         this.state = {
             people : [{
@@ -69,8 +68,6 @@ class News extends React.Component {
     this.setState({
         people : people})
 
-    this.setState({
-        UrlLink : "Link"})
     }
 
     onSubmit = async () => {
@@ -87,11 +84,8 @@ class News extends React.Component {
             <div className='news_cardWrapper'>
             {this.state.people.map((person, index) => (
             <div className="news_card" key={index}>
-                <div className = "card-title">
-                 <h5 className="title">{person.news}</h5>
-               </div>
                <div className = "card-title">
-                 <button className="link_button" onClick={()=> window.open(`${person.url}`)} >{this.state.UrlLink}</button>
+                 <news_cardWrapper className="link_button" onClick={()=> window.open(`${person.url}`)} > {person.news} </news_cardWrapper>
                </div>
             </div>
             ))}

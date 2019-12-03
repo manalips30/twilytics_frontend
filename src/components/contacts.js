@@ -25,8 +25,7 @@ const Contacts = ({ contacts, searchKey }) => {
               <h5 className="date">{contact.createdAt}</h5>
             </div>
             <h6 className="location">{contact.state}</h6>
-            <p className="card-text">{contact.fullText}</p>
-            <button className="buttonTweet" onClick={()=> window.open(`https://twitter.com/TulsiGabbard/status/${contact.id}`, "_blank")} >View Tweet</button>
+            <cardWrapper className="buttonTweet" onClick={()=> window.open(`https://twitter.com/TulsiGabbard/status/${contact.id}`, "_blank")} >{contact.fullText}</cardWrapper>
           </div>
         </div>
       ))
