@@ -38,8 +38,10 @@
 }
 
 .card-title {
-    display: inline-block;
-    padding: 7%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .title {
@@ -47,10 +49,10 @@
 }
 
 .profilepicture{
-    width: 90%;
-    margin-left: 10%;
+    /* width: 90%;
+    margin-left: 10%; */
 }
 
-.location{
-    margin-left: 10%;
+.card-location{
+    margin-right: 60%;
 }

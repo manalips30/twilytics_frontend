@@ -51,7 +51,7 @@ export default class Filter extends React.Component {
     render = () => {
         const { startDate, endDate } = this.state
         return (
-            <div>
+            <div className = "dateFilter">
             <input type="checkbox" name="Date" checked={this.state.date_check} onChange={e => this.onDateChanged(e)}/> Date <br/>
             {this.state.date_check === true ? <RenderCalender onChange={this.onChange} /> : ""}
             </div>
