@@ -39,30 +39,37 @@ class News extends React.Component {
 
     Processing =  () => {
 
+        var count = 0
         var people = [];
         var news = [];
         var urls = []
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < this.props.chartData.length - 1; i++) {
+            if(count < 10) {
             var obj = this.props.chartData[i];
+            if(obj["numberOfArticles"] > 0) {
              news = obj.news;
              urls = obj.news_url;
 
-            if(news != undefined) {
-                for (var j =0 ; j<2; j++) {
+                for (var j =0 ; j<5; j++) {
                     if(news[j] != null) {
+                        count = count + 1
                         people.push({
                             news: news[j],
                             url: urls[j]
                         });
                     }
                 }
-            }
         }
+    }
+    if(count < 10) {
+        alert("No news articles found")
+    }
+    }
         this.setState({
             people : people})
 
         this.setState({
-            UrlLink : "Go to Link"})
+            UrlLink : "Link"})
         }
     onSubmit = async () => {
       await this.Processing();
