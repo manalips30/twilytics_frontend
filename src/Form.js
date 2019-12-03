@@ -17,9 +17,9 @@ export default class Form extends React.Component {
     e.preventDefault();
     const {search} = this.state;
     this.props.onSearch(search);
-      this.setState({
-          search: ""
-      });
+      // this.setState({
+      //     search: ""
+      // });
   };
 
   render() {

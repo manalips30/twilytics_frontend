@@ -48,8 +48,7 @@ class RenderCalender extends React.Component {
       this.setState({ startDate, endDate })
       //this.props.onDate(startDate, endDate); 
 
-      Facets.onnameSubmit(startDate, "dateFrom")
-      Facets.onnameSubmit(endDate, "dateTo")
+      this.props.ondateSubmit(startDate, endDate, "dateFrom", "dateTo")
     }
 
     render = () => {
@@ -73,8 +72,8 @@ class Facets extends React.Component {
             hashtags: [],
             mentions: [],
             loc: [],
-            dateTo:0,
-            dateFrom:0,
+            dateTo:"",
+            dateFrom:"",
             verified:""
         }
     };
@@ -87,9 +86,20 @@ class Facets extends React.Component {
         return null;
     }
 
+    ondateSubmit = (fieldValue1,fieldValue2,fieldName1,fieldName2) => {
+        const facet = cloneDeep(this.state.facet);
+        facet[fieldName1] = fieldValue1
+        facet[fieldName2] = fieldValue2
+
+        this.setState({
+            facet
+        });
+
+        this.props.onFilter(JSON.stringify(facet));
+    }
+
     onnameSubmit = (e, fieldValue, fieldName) => {
         const facet = cloneDeep(this.state.facet);
-
         if (fieldName && fieldValue && facet[fieldName].includes(fieldValue)) {
             const index = facet[fieldName].indexOf(fieldValue);
             if (index > -1) {
@@ -101,21 +111,36 @@ class Facets extends React.Component {
         this.setState({
             facet
         });
-
+        console.log(facet)
         this.props.onFilter(JSON.stringify(facet));
     };
 
-    onReset ={
-        
+    onReset = () => {
+        this.setState({
+            facet:{
+                poiName: [],
+                lang: [],
+                hashtags: [],
+                mentions: [],
+                loc: [],
+                dateTo:"",
+                dateFrom:"",
+                verified:""
+            }
+        })
+        this.props.onFilter(JSON.stringify(this.state.facet));
     }
 
     render() {
         const { name, facet } = this.state;
         return (
             <div>
+                <div className="facetWrapper">
+                    <button className="resetButtonClass" onClick={e => this.onReset(e)}>reset</button>
+                </div>
                 <div className = "facetCard">
                     <div className = "facetWrapper">
-                        <Filter />
+                        <Filter ondateSubmit={this.ondateSubmit} />
                     </div>
                     <div className="facetWrapper">
                         <h5 className="header">User Name</h5>
@@ -217,9 +242,6 @@ class Facets extends React.Component {
                                 })}
                             </React.Fragment>
                         ) : null}
-                    </div>
-                    <div className="facetWrapper">
-                        <button className="resetButtonClass" onClick={e => this.onReset(e)}>reset</button>
                     </div>
                 </div>
             </div>
