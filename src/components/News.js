@@ -61,16 +61,18 @@ class News extends React.Component {
                 }
         }
     }
+    }
+
     if(count < 10) {
         alert("No news articles found")
     }
-    }
-        this.setState({
-            people : people})
+    this.setState({
+        people : people})
 
-        this.setState({
-            UrlLink : "Link"})
-        }
+    this.setState({
+        UrlLink : "Link"})
+    }
+
     onSubmit = async () => {
       await this.Processing();
     };
