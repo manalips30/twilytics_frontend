@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {Bar, Line, Pie, Doughnut} from 'react-chartjs-2';
 import App from '../App';
+import "./Chart.css";
 
 class Chart extends React.Component {
+
     state = {
       chartData: {},
       location_chartData: {},
       date_charData: {},
-      sentiment_chartData : {}
+      sentiment_chartData : {},
     };
 
     static defaultProps = {
-        displayTitle:false,
+        displayTitle:true,
         displayLegend:true,
         lengendPosition:'right'
     }
@@ -29,54 +31,51 @@ class Chart extends React.Component {
     }
 
     Processing =  () => {
-    
-        var lang_dict = {
-          "en": 0,
-          "fr": 0,
-          "hi": 0,
-          "ru": 0,
-          "pl": 0
-        };
 
-        var loc_dict = {
-            "California": 4,
-            "Boston": 3,
-            "Washington DC": 1,
-            "New Delhi": 6
-        };
+        var lang_dict = {};
+
+        var loc_dict = {};
 
         var sentiment_dict = {
-            "Positive": 0,
-            "Negative": 0,
-            "Neutral": 0,
+            "positive": 0,
+            "negative": 0,
+            "neutral": 0,
         };
 
         var date_dict = {};
-    
+
         for(var i = 0; i < this.props.chartData.length; i++) {
-          var obj = this.props.chartData[i];
+            var obj = this.props.chartData[i];
+
             if (obj.lang in lang_dict){
                 lang_dict[obj.lang] = lang_dict[obj.lang] + 1;
             }
-
-            if (obj["user.location"] in loc_dict) {
-                loc_dict[obj["user.location"]] = loc_dict[obj["user.location"]] + 1;
-            }
-            
-            if (obj["user.sentiment"] in sentiment_dict) {
-             sentiment_dict[obj["sentiment"]] = sentiment_dict[obj["sentiment"]] + 1;
+            else {
+                lang_dict[obj.lang] = 1;
             }
 
-            var date = String(obj["created_at"]).split(" ");;
+            if(obj["state"] != "null") {
+            if (obj["state"] in loc_dict) {
+                loc_dict[obj["state"]] = loc_dict[obj["state"]] + 1;
+                }
+            else {
+                    loc_dict[obj["state"]] = 1;
+                }
+            }
+            if (obj.sentiment in sentiment_dict) {
+             sentiment_dict[obj.sentiment] = sentiment_dict[obj.sentiment] + 1;
+            }
+
+            var date = String(obj.createdAt).split(" ");
             var monthDict={'Jan':1, 'Feb':2, 'Mar':3, 'Apr':4, 'May':5, 'Jun':6, 'Jul':7, 'Aug':8, 'Sep':9, 'Oct':10, 'Nov':11, 'Dec':12};
             var temp = date[5] + "-" + monthDict[String(date[1])] + "-" + date[2];
-            date = new Date(temp);
+            //var d = new Date(temp);
 
-            if (date in  date_dict) {
-            date_dict[date] = date_dict[date] + 1;
+            if (temp in  date_dict) {
+            date_dict[temp] = date_dict[temp] + 1;
             }
             else {
-            date_dict[date] = 1;
+            date_dict[temp] = 1;
             }
         }   
 
@@ -116,7 +115,7 @@ class Chart extends React.Component {
             {
                 label : "Language",
                 data: lang_values,
-                backgroundColor:  ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "FCCE56"],
+                backgroundColor:  ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#a8e0ff"],
             }
         ],
     }
@@ -129,7 +128,7 @@ class Chart extends React.Component {
         {
             label : 'Location',
             data: loc_values,
-            backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF']
+            backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff']
         }],
         }
     })
@@ -143,7 +142,7 @@ class Chart extends React.Component {
             data: date_values,
             borderColor: "#8e5ea2",
             fill: false,
-            backgroundColor: ['#a8e0ff'],
+            backgroundColor: '#a8e0ff',
         }]   
         }
         })
@@ -157,7 +156,7 @@ class Chart extends React.Component {
                 data: sentiment_values,
                 borderColor: "#8e5ea2",
                 fill: false,
-                backgroundColor: ['#a8e0ff'],
+                backgroundColor: ['#a8e0ff', '#b08ea2', '#BBB6DF'],
             }]   
         }
     })
@@ -173,13 +172,13 @@ class Chart extends React.Component {
             <button className="buttonClass" onClick={ this.onSubmit}>Analyse</button> 
             <Doughnut
                     data={this.state.chartData}
-                    width= {20}
-                    height={10}
+                    width= {40}
+                    height= {10}
                     postion="left"
                     options={{
                         title:{
                             display:this.props.displayTitle,
-                            text:'Languages',
+                            text:'Language Based Analysis',
                             fontSize:20
                         },
                         lengend:{
@@ -192,13 +191,13 @@ class Chart extends React.Component {
             />
             <Pie
                     data={this.state.location_chartData}
-                    width={20}
+                    width={40}
                     height={10}
                     postion="left"
                     options={{
                         title:{
                             display:this.props.displayTitle,
-                            text:'Location',
+                            text:'Location Based Analysis',
                             fontSize:20
                         },
                         lengend:{
@@ -209,16 +208,16 @@ class Chart extends React.Component {
                         theme: "dark1"
                     }}
             />
-            <Line
+            <Bar
                     data={this.state.date_chartData}
-                    width= {5}
-                    height={5}
+                    width= {40}
+                    height={20}
                     postion="left"
                     options={{
                         fill:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:'Time series',
+                            text:'Time series(Number of tweets)',
                             fontSize:20
                             },
                         lengend:{
@@ -231,7 +230,7 @@ class Chart extends React.Component {
             />
             <Pie
                     data={this.state.sentiment_chartData}
-                    width= {20}
+                    width= {40}
                     height={10}
                     postion="left"
                     options={{
