@@ -12,19 +12,14 @@ const Contacts = ({ contacts, searchKey }) => {
             <div className="card-title">
               <img className="profilepicture"
               src={contact.userProfileImageUrlHttps}
-              alt="new"
-              />
-            </div>
-            <div className = "card-title">
+              alt="new"/>
               <h5 className="title">{contact.userName}</h5>
-            </div>
-            <div className = "card-title">
               <h5 className="emoji">{contact.sentiment}</h5>
-            </div>
-            <div className = "card-title">
               <h5 className="date">{contact.createdAt}</h5>
             </div>
-            <h6 className="location">{contact.state}</h6>
+            <div className = "card-location">
+              <h5> {contact.userLocation}</h5>
+            </div>
             <p className="card-text">{contact.fullText}</p>
             <button className="buttonTweet" onClick={()=> window.open(`https://twitter.com/TulsiGabbard/status/${contact.id}`, "_blank")} >View Tweet</button>
           </div>

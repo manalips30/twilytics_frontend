@@ -120,7 +120,6 @@ class App extends Component {
           <div className = "App_1"> 
           <Form onChange={this.onChange} onSearch={this.onSearch} />
             <div className = "App-components" > 
-              <Filter onDate={this.onDate} />
               <Facets facets={this.state.facets} onFacet={this.onFacet} onFilter={this.onFilter}/> 
               <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
               <News chartData={this.state.contacts}/>
