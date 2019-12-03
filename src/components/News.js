@@ -23,7 +23,6 @@ class News extends React.Component {
         super(props);
         this.state = {
         chartData :{},
-        UrlLink : "No news to Display"
         }
         this.state = {
             people : [{
@@ -39,31 +38,38 @@ class News extends React.Component {
 
     Processing =  () => {
 
+        var count = 0
         var people = [];
         var news = [];
         var urls = []
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < this.props.chartData.length - 1; i++) {
+            if(count < 10) {
             var obj = this.props.chartData[i];
+            if(obj["numberOfArticles"] > 0) {
              news = obj.news;
              urls = obj.news_url;
 
-            if(news != undefined) {
-                for (var j =0 ; j<2; j++) {
+                for (var j =0 ; j<5; j++) {
                     if(news[j] != null) {
+                        count = count + 1
                         people.push({
                             news: news[j],
                             url: urls[j]
                         });
                     }
                 }
-            }
         }
-        this.setState({
-            people : people})
+    }
+    }
 
-        this.setState({
-            UrlLink : "Go to Link"})
-        }
+    if(count < 10) {
+        alert("No news articles found")
+    }
+    this.setState({
+        people : people})
+
+    }
+
     onSubmit = async () => {
       await this.Processing();
     };
@@ -78,11 +84,8 @@ class News extends React.Component {
             <div className='news_cardWrapper'>
             {this.state.people.map((person, index) => (
             <div className="news_card" key={index}>
-                <div className = "card-title">
-                 <h5 className="title">{person.news}</h5>
-               </div>
                <div className = "card-title">
-                 <button className="link_button" onClick={()=> window.open(`${person.url}`)} >{this.state.UrlLink}</button>
+                 <news_cardWrapper className="link_button" onClick={()=> window.open(`${person.url}`)} > {person.news} </news_cardWrapper>
                </div>
             </div>
             ))}
