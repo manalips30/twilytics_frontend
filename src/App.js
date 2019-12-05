@@ -11,10 +11,19 @@ import "./App.css";
 import "./logo.svg";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.News = React.createRef();
+    this.Chart = React.createRef();
+  }
+
+
   state = {
     searchKey: "",
     fields: {},
     contacts :[],
+    News :{},
+    Chart:{},
     facets:{"poiName":[],
     "lang":[],
     "hashtags":[],
@@ -77,6 +86,8 @@ class App extends Component {
       this.setState({ contacts: data })
       this.setState({analyse:true})
       console.log(this.state.contacts)
+      this.News.current.Processing();
+      this.Chart.current.Processing();
     })
     .catch(console.log)
 
@@ -175,7 +186,7 @@ class App extends Component {
             <div className = "App-components" > 
               <Facets facets={this.state.facets} onFacet={this.onFacet} onFilter={this.onFilter}/> 
               <Contacts contacts={this.state.contacts} searchKey={searchKey}/>
-              <News chartData={this.state.contacts}/>
+              <News ref={this.News} newsData={this.state.contacts} />
             </div>
           </div>
           )
@@ -185,7 +196,7 @@ class App extends Component {
         () => {
          return (
           <div className = "App_1">
-            <Chart chartData={this.state.contacts} />
+            <Chart ref={this.Chart} chartData={this.state.contacts} />
             </div>
           )
         }
@@ -195,5 +206,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

@@ -7,9 +7,10 @@ import "./contacts.css"
 class News extends React.Component {
     
     state = {
-      chartData: {},
+      newsData: {},
       people : [],
-      UrlLink : "No news to Display"
+      UrlLink : "No news to Display",
+      Data:{}
     };
 
     static defaultProps = {
@@ -22,7 +23,7 @@ class News extends React.Component {
    
         super(props);
         this.state = {
-        chartData :{},
+        newsData :{},
         }
         this.state = {
             people : [{
@@ -42,9 +43,10 @@ class News extends React.Component {
         var people = [];
         var news = [];
         var urls = []
-        for(var i = 0; i < this.props.chartData.length - 1; i++) {
+        if(this.props.newsData !=  undefined ) {
+        for(var i = 0; i < this.props.newsData.length - 1; i++) {
             if(count < 10) {
-            var obj = this.props.chartData[i];
+            var obj = this.props.newsData[i];
             if(obj["numberOfArticles"] > 0) {
              news = obj.news;
              urls = obj.news_url;
@@ -61,31 +63,32 @@ class News extends React.Component {
         }
     }
     }
-
-    if(count < 10) {
+    if(count < 1) {
         alert("No news articles found")
     }
+}
     this.setState({
         people : people})
 
     }
 
-    onSubmit = async () => {
-      await this.Processing();
-    };
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.contacts !== prevState.newsData) {
+            return { newsData: nextProps.contacts };
+        }
+        return null;
+    }
 
     render(){
-            const temp = this.state.WrappedMap
             return (
             <div className="news">
             <div news_button>
-            <button className="news_button" onClick={ this.onSubmit}>News</button>
             </div>
             <div className='news_cardWrapper'>
             {this.state.people.map((person, index) => (
             <div className="news_card" key={index}>
                <div className = "card-title">
-                 <news_cardWrapper className="link_button" onClick={()=> window.open(`${person.url}`)} > {person.news} </news_cardWrapper>
+                  <news_cardWrapper className="link_button" onClick={()=> window.open(`${person.url}`)} > {person.news} </news_cardWrapper>
                </div>
             </div>
             ))}
