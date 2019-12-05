@@ -33,8 +33,8 @@ class Chart extends React.Component {
 
     Processing =  () => {
 
-        var poi_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
-        var news_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
+        var poi_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0, "ArvindKejriwal":0, "narendramodi":0, "DrKumarVishwas":0, "nithin_gadkari":0, "yadavakhilesh":0};
+        var news_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0, "ArvindKejriwal":0, "narendramodi":0, "DrKumarVishwas":0, "nithin_gadkari":0, "yadavakhilesh":0};
         var lang_dict = {};
 
         var loc_dict = {};

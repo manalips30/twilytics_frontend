@@ -6,22 +6,19 @@
     display: block;
 }
 
-.news_button {
-    position: relative;
-    right: -200px;
-}
-
 .link_button {
     margin-right: 40%;
     color: blue;
+    text-decoration: underline;
 }
 
 .news_cardWrapper {
     display: block;
 }
 
-.title {
+.card_title {
     color: rgb(31, 224, 13);
+   
 }
 
 .news{
