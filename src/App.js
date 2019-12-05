@@ -88,7 +88,7 @@ class App extends Component {
       this.setState({ contacts: data })
     })
     .catch(console.log)
-    console.log("onFiltercalled")
+    console.log("onFiltercalled") 
   }
 
   onDate = (startDate, endDate) => {

@@ -115,6 +115,17 @@ class Facets extends React.Component {
         this.props.onFilter(JSON.stringify(facet));
     };
 
+    onverified= (e, fieldValue, fieldName) => {
+        const facet = cloneDeep(this.state.facet);
+        facet[fieldName] = fieldValue
+
+        this.setState({
+            facet
+        });
+
+        this.props.onFilter(JSON.stringify(facet));
+    };
+
     onReset = () => {
         this.setState({
             facet:{
@@ -162,6 +173,11 @@ class Facets extends React.Component {
                                 })}
                             </React.Fragment>
                         ) : null}
+                    </div>
+                    <div className="facetWrapper">
+                        <h5 className="header">Verified</h5>
+                        <input type="checkbox" name="Verified" checked={this.state.date_check} onChange={e => this.onverified(e)}/> Verified <br/>
+                        {/* {this.state.date_check === true ? <RenderCalender onChange={this.onChange} /> : ""} */}
                     </div>
                     <div className="facetWrapper">
                         <h5 className="header">Language</h5>
