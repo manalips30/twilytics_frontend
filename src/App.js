@@ -20,6 +20,12 @@ class App extends Component {
     "hashtags":[],
     "mentions":[],
     "userLocation":[],
+    "additionalProperties":{}},
+    facet_query:{"poiName":[],
+    "lang":[],
+    "hashtags":[],
+    "mentions":[],
+    "userLocation":[],
     "additionalProperties":{}}
   };
 
@@ -34,20 +40,38 @@ class App extends Component {
 
   //http://twilytics.us-east-2.elasticbeanstalk.com/list?name=donald 
 
-   componentDidMount = async() => {
-     //await fetch('http://localhost:8080/fetch/fields?name=')
-     await fetch('http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name')
+   /*componentDidMount = async() => {
+     await fetch('http://localhost:8080/fetch/fields?name=')
+     //await fetch('http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name')
     .then(res => res.json())
      .then((data) => {
        this.setState({ facets: data })
      })
      .catch(console.log)
      console.log(this.state.facets)
-   }
+   }*/
+
+   componentDidMount = async() => {
+    console.log(this.state.facets)
+    await fetch('http://localhost:8080/fetch/fields?name=', {
+       method: 'POST',
+       headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(this.state.facet_query)
+     })
+   .then(res => res.json())
+    .then((data) => {
+      this.setState({ facets: data })
+    })
+    .catch(console.log)
+    console.log(this.state.facets)
+  }
 
   onSearch = async(search) => {
-    //await fetch(`http://localhost:8080/query/search?name=${search}`)
-    await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/search?name=${search}`)
+    await fetch(`http://localhost:8080/query/search?name=${search}`)
+    //await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/search?name=${search}`)
     .then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
@@ -62,9 +86,29 @@ class App extends Component {
     this.onFacet(search)  
   };
 
+  /*onFacet = async(query) => {
+    await fetch(`http://localhost:8080/fetch/fields?name=${query}`)
+    //await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name=${query}`)
+    .then(res => res.json())
+    .then((data) => {
+     this.setState({ facets: data })
+    })
+    .catch(console.log)
+    console.log("onFacetcalled" + query)
+  };*/
+
   onFacet = async(query) => {
-    //await fetch(`http://localhost:8080/fetch/fields?name=${query}`)
-    await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name=${query}`)
+    await fetch(`http://localhost:8080/fetch/fields?name=${query}`, 
+    {
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.facet_query)
+    }
+    )
+    //await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name=${query}`)
     .then(res => res.json())
     .then((data) => {
      this.setState({ facets: data })
@@ -74,9 +118,9 @@ class App extends Component {
   };
 
   onFilter = async(query) => {
-    console.log(this.state.searchKey)
-    //await fetch(`http://localhost:8080/query/facet?name=${this.state.searchKey}`, {
-      await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/facet?name=${this.state.searchKey}`, {
+    console.log(query)
+    await fetch(`http://localhost:8080/query/facet?name=${this.state.searchKey}`, {
+     // await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/facet?name=${this.state.searchKey}`, {
       method: 'POST',
       headers: {
       'Accept': 'application/json',
@@ -89,6 +133,11 @@ class App extends Component {
     })
     .catch(console.log)
     console.log("onFiltercalled") 
+    /// Call onfacet after filter is changed
+    this.setState({facet_query: query})
+    console.log(this.state.facet_query)
+    console.log(this.state.searchKey)
+    //this.onFacet(this.state.searchKey)
   }
 
   onDate = (startDate, endDate) => {

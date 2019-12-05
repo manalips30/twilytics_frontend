@@ -66,6 +66,7 @@ class Facets extends React.Component {
     state = {
         name: {},
         query: "",
+        verified_check:false,
         facet: {
             poiName: [],
             lang: [],
@@ -115,14 +116,22 @@ class Facets extends React.Component {
         this.props.onFilter(JSON.stringify(facet));
     };
 
-    onverified= (e, fieldValue, fieldName) => {
+    onVerifiedChanged(e){
+        this.setState({verified_check: !this.state.verified_check});
+        console.log(!this.state.verified_check)
+        var verified = !this.state.verified_check
+        console.log(verified)
+        this.onverified(verified, "verified")
+    };
+
+    onverified= (fieldValue, fieldName) => {
         const facet = cloneDeep(this.state.facet);
         facet[fieldName] = fieldValue
 
         this.setState({
             facet
         });
-
+        console.log(JSON.stringify(facet))
         this.props.onFilter(JSON.stringify(facet));
     };
 
@@ -176,8 +185,7 @@ class Facets extends React.Component {
                     </div>
                     <div className="facetWrapper">
                         <h5 className="header">Verified</h5>
-                        <input type="checkbox" name="Verified" checked={this.state.date_check} onChange={e => this.onverified(e)}/> Verified <br/>
-                        {/* {this.state.date_check === true ? <RenderCalender onChange={this.onChange} /> : ""} */}
+                        <input type="checkbox" name="Verified" onChange={e => this.onVerifiedChanged(e)}/> Verified <br/>
                     </div>
                     <div className="facetWrapper">
                         <h5 className="header">Language</h5>
@@ -200,7 +208,7 @@ class Facets extends React.Component {
                         ) : null}
                     </div>
                     <div className="facetWrapper">
-                        <h5 className="header">Hashtags</h5>
+                        <h5 className="header">Trending Hashtags</h5>
                         {name && name.hashtags ? (
                             <React.Fragment>
                                 {name.hashtags.map(poi_hashtag => {
@@ -219,7 +227,7 @@ class Facets extends React.Component {
                             </React.Fragment>
                         ) : null}
                     </div>
-                    <div className="facetWrapper">
+                    {/* <div className="facetWrapper">
                         <h5 className="header">Mentions</h5>
                         {name && name.mentions ? (
                             <React.Fragment>
@@ -238,7 +246,7 @@ class Facets extends React.Component {
                                 })}
                             </React.Fragment>
                         ) : null}
-                    </div>
+                    </div> */}
                     <div className="facetWrapper">
                         <h5 className="header">Location</h5>
                         {name && name.userLocation ? (
