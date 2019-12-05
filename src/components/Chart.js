@@ -10,6 +10,8 @@ class Chart extends React.Component {
       location_chartData: {},
       date_charData: {},
       sentiment_chartData : {},
+      poiData :{},
+      newsData:{}
     };
 
     static defaultProps = {
@@ -31,6 +33,8 @@ class Chart extends React.Component {
 
     Processing =  () => {
 
+        var poi_dict = {"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
+        var news_dict = {"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
         var lang_dict = {};
 
         var loc_dict = {};
@@ -76,6 +80,14 @@ class Chart extends React.Component {
             else {
             date_dict[temp] = 1;
             }
+            console.log(obj["userScreenName"])
+            if (obj["userScreenName"] in poi_dict){
+                poi_dict[obj.userScreenName] = poi_dict[obj.userScreenName] + 1;
+            }
+
+            if (obj["userScreenName"] in news_dict){
+                news_dict[obj.userScreenName] = news_dict[obj.userScreenName] + parseInt(obj.numberOfArticles, 10);
+            }
         }   
 
         var lang_keys = []
@@ -86,10 +98,24 @@ class Chart extends React.Component {
         var date_values = []
         var sentiment_keys = []
         var sentiment_values = []
+        var poi_keys = []
+        var poi_values = []
+        var news_values = []
+        var news_keys = []
 
-        for(var key in lang_dict)  { 
+        for(var key in lang_dict)  {
             lang_keys.push( key );
             lang_values.push(lang_dict[key]);
+        }
+
+        for(var key in news_dict){
+            news_keys.push( key );
+            news_values.push(news_dict[key]);
+        }
+
+        for(var key in poi_dict)  { 
+            poi_keys.push( key );
+            poi_values.push(poi_dict[key]);
         }
 
         for(var key in loc_dict)  { 
@@ -121,13 +147,73 @@ class Chart extends React.Component {
     })
 
     this.setState({
+        newsData : {
+        labels : news_keys,
+        datasets:[
+            {
+                label : "No of news articles",
+                data: news_values,
+                backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff', '#7FFF00', '#D2691E','#FF7F50','#6495ED', 		
+                '#FFF8DC',
+                '#DC143C',	 		
+                '#00FFFF',	 		
+                '#00008B',	 		
+                '#008B8B',	 		
+                '#B8860B',	 		
+                '#A9A9A9',	 		
+                '#A9A9A9'] 
+            }
+        ],
+    }
+    })
+
+    this.setState({
+        poiData : {
+        labels : poi_keys,
+        datasets:[
+            {
+                label : "POI based Analysis",
+                data: poi_values,
+                backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff', '#7FFF00', '#D2691E','#FF7F50','#6495ED',
+                '#FFF8DC',	 		
+                '#DC143C',	 		
+                '#00FFFF',	 		
+                '#00008B',	 		
+                '#008B8B',	 		
+                '#B8860B',	 		
+                '#A9A9A9',	 		
+                '#A9A9A9']
+            }
+        ],
+    }
+    })
+
+    this.setState({
         location_chartData : {
         labels : loc_keys,
         datasets:[
         {
             label : 'Location',
             data: loc_values,
-            backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff']
+            backgroundColor: ['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff', '#7FFF00', '#D2691E','#FF7F50','#6495ED', 		
+             	'#FFF8DC',	 		
+             	'#DC143C',	 		
+             	'#00FFFF',	 		
+             	'#00008B',	 		
+             	'#008B8B',	 		
+             	'#B8860B',	 		
+             	'#A9A9A9',	 		
+             	'#A9A9A9',	 		
+             	'#006400',	 		
+             	'#BDB76B',	 		
+             	'#8B008B',	 		
+             	'#556B2F',	 		
+             	'#FF8C00',	 		
+             	'#9932CC',	 		
+             	'#8B0000',	 		
+             	'#E9967A',	 		
+             	'#8FBC8F',	 		
+             	'#483D8B',]
         }],
         }
     })
@@ -139,7 +225,7 @@ class Chart extends React.Component {
         {
             label : 'Time series',
             data: date_values,
-            borderColor: "#8e5ea2",
+            borderColor: '#8e5ea2',
             fill: false,
             backgroundColor: '#a8e0ff',
         }]   
@@ -246,6 +332,46 @@ class Chart extends React.Component {
                         theme: "dark2"
                     }}
             />
+            <Pie
+            data={this.state.poiData}
+            width= {40}
+            height={10}
+            postion="left"
+            options={{
+                fill:false,
+                title:{
+                    display:this.props.displayTitle,
+                    text:"POI based Analysis",
+                    fontSize:20
+                    },
+                lengend:{
+                   display:this.props.displayLegend,
+                   positon:this.props.lengendPosition
+                },
+                animationEnabled : true,
+                theme: "light2"
+            }}
+    />
+         <Pie
+            data={this.state.newsData}
+            width= {40}
+            height={10}
+            postion="left"
+            options={{
+                fill:false,
+                title:{
+                    display:this.props.displayTitle,
+                    text:"Impact of POI's in News",
+                    fontSize:20
+                    },
+                lengend:{
+                   display:this.props.displayLegend,
+                   positon:this.props.lengendPosition
+                },
+                animationEnabled : true,
+                theme: "light2"
+            }}
+    />
             </div>
         )
     }
