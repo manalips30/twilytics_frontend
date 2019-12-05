@@ -33,8 +33,8 @@ class Chart extends React.Component {
 
     Processing =  () => {
 
-        var poi_dict = {"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
-        var news_dict = {"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
+        var poi_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
+        var news_dict = {"realDonaldTrump":0,"MichaelBennet" : 0, "JoeBiden" : 0, "CoryBooker":0 ,"GovernorBullock" : 0,"PeteButtigieg" : 0,"JulianCastro" : 0, "JohnDelaney" : 0, "TulsiGabbard" : 0, "amyklobuchar" : 0, "KamalaHarris" : 0, "DevalPatrick" : 0, "BernieSanders" : 0, "Joe Sestak" : 0, "marwilliamson" : 0, "SenWarren":0};
         var lang_dict = {};
 
         var loc_dict = {};
@@ -296,7 +296,7 @@ class Chart extends React.Component {
             <Bar
                     data={this.state.date_chartData}
                     width= {40}
-                    height={20}
+                    height={10}
                     postion="left"
                     options={{
                         fill:false,
@@ -332,7 +332,7 @@ class Chart extends React.Component {
                         theme: "dark2"
                     }}
             />
-            <Pie
+            <Doughnut
             data={this.state.poiData}
             width= {40}
             height={10}
@@ -352,7 +352,7 @@ class Chart extends React.Component {
                 theme: "light2"
             }}
     />
-         <Pie
+         <Line
             data={this.state.newsData}
             width= {40}
             height={10}
