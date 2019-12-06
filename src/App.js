@@ -63,6 +63,7 @@ class App extends Component {
    componentDidMount = async() => {
     console.log(this.state.facets)
     await fetch('http://localhost:8080/fetch/fields?name=', {
+    //  await fetch('http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name' , {
        method: 'POST',
        headers: {
        'Accept': 'application/json',
@@ -110,6 +111,7 @@ class App extends Component {
 
   onFacet = async(query) => {
     await fetch(`http://localhost:8080/fetch/fields?name=${query}`, 
+    //await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/fetch/fields?name=${query}` ,
     {
       method: 'POST',
       headers: {
@@ -132,7 +134,7 @@ class App extends Component {
   onFilter = async(query) => {
     console.log(query)
     await fetch(`http://localhost:8080/query/facet?name=${this.state.searchKey}`, {
-     // await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/facet?name=${this.state.searchKey}`, {
+    //  await fetch(`http://twilytics.us-east-2.elasticbeanstalk.com/query/facet?name=${this.state.searchKey}`, {
       method: 'POST',
       headers: {
       'Accept': 'application/json',
