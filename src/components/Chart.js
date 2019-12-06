@@ -140,8 +140,15 @@ class Chart extends React.Component {
             {
                 label : "Language",
                 data: lang_values,
-                backgroundColor:  ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#a8e0ff"],
-            }
+                backgroundColor: ['#a8e0ff', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF', '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850', '#a8e0ff', '#7FFF00', '#D2691E','#FF7F50','#6495ED',
+                '#FFF8DC',	 		
+                '#DC143C',	 		
+                '#00FFFF',	 		
+                '#00008B',	 		
+                '#008B8B',	 		
+                '#B8860B',	 		
+                '#A9A9A9',	 		
+                '#A9A9A9'],            }
         ],
     }
     })
