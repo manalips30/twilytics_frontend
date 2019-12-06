@@ -123,6 +123,7 @@ class App extends Component {
     .then(res => res.json())
     .then((data) => {
      this.setState({ facets: data })
+     
     })
     .catch(console.log)
     console.log("onFacetcalled" + query)
@@ -141,6 +142,7 @@ class App extends Component {
     }).then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
+      this.News.current.Processing();
     })
     .catch(console.log)
     console.log("onFiltercalled") 
