@@ -81,7 +81,7 @@ class Facets extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.facets !== prevState.name) {
-            console.log(nextProps.facets);
+            //console.log(nextProps.facets);
             return { name: nextProps.facets };
         }
         return null;
@@ -108,19 +108,19 @@ class Facets extends React.Component {
             }
         } else  {
             facet[fieldName].push(fieldValue);
+            //facet[fieldName] = fieldValue;
         }
         this.setState({
             facet
         });
-        console.log(facet)
         this.props.onFilter(JSON.stringify(facet));
     };
 
     onVerifiedChanged(e){
         this.setState({verified_check: !this.state.verified_check});
-        console.log(!this.state.verified_check)
+        //console.log(!this.state.verified_check)
         var verified = !this.state.verified_check
-        console.log(verified)
+        //console.log(verified)
         this.onverified(verified, "verified")
     };
 
@@ -131,7 +131,7 @@ class Facets extends React.Component {
         this.setState({
             facet
         });
-        console.log(JSON.stringify(facet))
+        //console.log(JSON.stringify(facet))
         this.props.onFilter(JSON.stringify(facet));
     };
 

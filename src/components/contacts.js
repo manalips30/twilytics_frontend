@@ -3,7 +3,6 @@ import "./contacts.css";
 
 
 const Contacts = ({ contacts, searchKey }) => {
-  console.log(contacts)
   return (
     <div>
         <div className='cardWrapper'>
