@@ -163,7 +163,11 @@ class Facets extends React.Component {
                         <Filter ondateSubmit={this.ondateSubmit} />
                     </div>
                     <div className="facetWrapper">
-                        <h5 className="header">User Name</h5>
+                        <h5 className="header">Verified Users</h5>
+                        <input type="checkbox" name="Verified" onChange={e => this.onVerifiedChanged(e)}/> Verified <br/>
+                    </div>
+                    <div className="facetWrapper">
+                        <h5 className="header">Trending Users</h5>
                         {name && name.userScreenName ? (
                             <React.Fragment>
                                 {name.userScreenName.map(poi_name => {
@@ -183,12 +187,9 @@ class Facets extends React.Component {
                             </React.Fragment>
                         ) : null}
                     </div>
+
                     <div className="facetWrapper">
-                        <h5 className="header">Verified</h5>
-                        <input type="checkbox" name="Verified" onChange={e => this.onVerifiedChanged(e)}/> Verified <br/>
-                    </div>
-                    <div className="facetWrapper">
-                        <h5 className="header">Language</h5>
+                        <h5 className="header">Languages</h5>
                         {name && name.lang ? (
                             <React.Fragment>
                                 {name.lang.map(poi_lang => {
@@ -248,7 +249,7 @@ class Facets extends React.Component {
                         ) : null}
                     </div> */}
                     <div className="facetWrapper">
-                        <h5 className="header">Location</h5>
+                        <h5 className="header">Trending Locations</h5>
                         {name && name.userLocation ? (
                             <React.Fragment>
                                 {name.userLocation.map(poi_location => {
